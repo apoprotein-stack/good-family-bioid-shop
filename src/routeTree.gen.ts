@@ -9,38 +9,74 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProductsRouteImport } from './routes/products'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
+import { Route as BrandsBrandRouteImport } from './routes/brands.$brand'
 
+const ProductsRoute = ProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductsSlugRoute = ProductsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ProductsRoute,
+} as any)
+const BrandsBrandRoute = BrandsBrandRouteImport.update({
+  id: '/brands/$brand',
+  path: '/brands/$brand',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/products': typeof ProductsRouteWithChildren
+  '/brands/$brand': typeof BrandsBrandRoute
+  '/products/$slug': typeof ProductsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/products': typeof ProductsRouteWithChildren
+  '/brands/$brand': typeof BrandsBrandRoute
+  '/products/$slug': typeof ProductsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/products': typeof ProductsRouteWithChildren
+  '/brands/$brand': typeof BrandsBrandRoute
+  '/products/$slug': typeof ProductsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/products' | '/brands/$brand' | '/products/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/products' | '/brands/$brand' | '/products/$slug'
+  id: '__root__' | '/' | '/products' | '/brands/$brand' | '/products/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ProductsRoute: typeof ProductsRouteWithChildren
+  BrandsBrandRoute: typeof BrandsBrandRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/products': {
+      id: '/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof ProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +84,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/products/$slug': {
+      id: '/products/$slug'
+      path: '/$slug'
+      fullPath: '/products/$slug'
+      preLoaderRoute: typeof ProductsSlugRouteImport
+      parentRoute: typeof ProductsRoute
+    }
+    '/brands/$brand': {
+      id: '/brands/$brand'
+      path: '/brands/$brand'
+      fullPath: '/brands/$brand'
+      preLoaderRoute: typeof BrandsBrandRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface ProductsRouteChildren {
+  ProductsSlugRoute: typeof ProductsSlugRoute
+}
+
+const ProductsRouteChildren: ProductsRouteChildren = {
+  ProductsSlugRoute: ProductsSlugRoute,
+}
+
+const ProductsRouteWithChildren = ProductsRoute._addFileChildren(
+  ProductsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ProductsRoute: ProductsRouteWithChildren,
+  BrandsBrandRoute: BrandsBrandRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

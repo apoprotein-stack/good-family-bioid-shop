@@ -35,7 +35,11 @@ export const Route = createFileRoute("/brands/$brand")({
 });
 
 function BrandPage() {
-  const { brand, meta, products } = Route.useLoaderData();
+  const { brand, meta, products } = Route.useLoaderData() as {
+    brand: Brand;
+    meta: (typeof BRANDS)[Brand];
+    products: import("@/lib/products").Product[];
+  };
   const isHao = brand === "haojiating";
 
   return (

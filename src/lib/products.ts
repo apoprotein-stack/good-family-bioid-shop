@@ -1,6 +1,7 @@
-import nightEnzyme from "@/assets/night-enzyme.png";
-import hangover from "@/assets/hangover.jpg";
-import growthCalcium from "@/assets/growth-calcium.png";
+import nightEnzyme from "@/assets/night-enzyme.jpg";
+import vitalityMetabolism from "@/assets/vitality-metabolism.jpg";
+import growthCalcium from "@/assets/growth-calcium.jpg";
+import cranberryProbiotics from "@/assets/cranberry-probiotics.jpg";
 import bbRadiance from "@/assets/bb-radiance.jpg";
 import dhaFishOil from "@/assets/dha-fish-oil.png";
 import fosFiber from "@/assets/fos-fiber.jpg";
@@ -49,16 +50,16 @@ export const PRODUCTS: Product[] = [
     ingredients: ["夜酵素複合物", "GABA", "芝麻素", "植物萃取"],
   },
   {
-    slug: "hangover-relief",
-    name: "解酒複方膠囊",
-    tagline: "酒前保護・酒後代謝・應酬守護",
+    slug: "vitality-metabolism",
+    name: "活力代謝複方膠囊",
+    tagline: "增強體力・促進代謝・全家守護",
     brand: "haojiating",
     price: 980,
-    image: hangover,
+    image: vitalityMetabolism,
     size: "60 粒 / 盒",
-    benefits: ["酒前保護", "酒後代謝", "天然植萃", "全家守護"],
-    description: "全方位代謝守護配方，結合薑黃、乳薊與多種天然植萃，讓應酬與日常都能安心舒適。",
-    ingredients: ["薑黃萃取", "乳薊萃取", "枳椇子", "維生素 B 群"],
+    benefits: ["增強體力", "促進新陳代謝", "天然植萃", "全家守護"],
+    description: "全方位代謝守護配方，嚴選多種天然植萃搭配薑根精華，幫助增強體力、促進新陳代謝，讓全家人保持每日活力與舒適。",
+    ingredients: ["薑黃萃取", "薑根萃取", "複方植萃", "維生素 B 群"],
   },
   {
     slug: "growth-calcium",
@@ -71,6 +72,18 @@ export const PRODUCTS: Product[] = [
     benefits: ["補充關鍵鈣", "維生素 D3 添加", "骨骼與牙齒", "美味好吃"],
     description: "為成長中的孩子設計，鈣質搭配維生素 D3 幫助吸收，香濃牛奶風味讓每日一錠成為孩子期待的日常。",
     ingredients: ["碳酸鈣", "維生素 D3", "乳鐵蛋白", "天然乳粉"],
+  },
+  {
+    slug: "cranberry-probiotics",
+    name: "蔓越莓益生菌",
+    tagline: "私密保養 × 腸道調整 × 美妍維持",
+    brand: "haojiating",
+    price: 890,
+    image: cranberryProbiotics,
+    size: "60 顆 / 盒",
+    benefits: ["女性守護", "腸道平衡", "美妍光彩", "150 億活菌"],
+    description: "嚴選蔓越莓萃取搭配 150 億活菌多株專利益生菌，專為女性打造的每日保養配方，由內而外維持腸道平衡與美妍光彩。全素可食，每日 1-2 次即可守護健康美麗。",
+    ingredients: ["蔓越莓萃取", "原花青素 PACs", "150 億活菌", "多株專利益生菌"],
   },
   {
     slug: "bb-radiance",

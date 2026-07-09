@@ -3,7 +3,7 @@ import { useState } from "react";
 import { PRODUCTS, BRANDS, type Brand } from "@/lib/products";
 import { ProductCard } from "@/components/site/ProductCard";
 
-export const Route = createFileRoute("/products")({
+export const Route = createFileRoute("/products/")({
   head: () => ({
     meta: [
       { title: "全部產品 — Health & Vitality" },

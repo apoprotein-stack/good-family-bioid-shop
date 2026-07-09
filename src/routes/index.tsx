@@ -72,7 +72,7 @@ function Index() {
               查看全部產品
             </Link>
           </div>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {haojiating.map((p) => (
               <ProductCard key={p.slug} product={p} />
             ))}

@@ -89,6 +89,12 @@ function ProductDetail() {
             </span>
             <h1 className="mt-3 font-serif text-4xl font-semibold leading-tight sm:text-5xl">{product.name}</h1>
             <p className="mt-3 text-lg text-zinc-500">{product.tagline}</p>
+            {product.certification && (
+              <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-brand-emerald/10 px-3 py-1 text-xs font-medium text-brand-emerald">
+                ✓ {product.certification}
+              </p>
+            )}
+
 
             <div className="mt-8 flex items-baseline gap-4">
               <span className="font-serif text-3xl font-medium">{formatPrice(product.price)}</span>

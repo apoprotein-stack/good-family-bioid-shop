@@ -89,6 +89,12 @@ function ProductDetail() {
             </span>
             <h1 className="mt-3 font-serif text-4xl font-semibold leading-tight sm:text-5xl">{product.name}</h1>
             <p className="mt-3 text-lg text-zinc-500">{product.tagline}</p>
+            {product.certification && (
+              <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-brand-emerald/10 px-3 py-1 text-xs font-medium text-brand-emerald">
+                ✓ {product.certification}
+              </p>
+            )}
+
 
             <div className="mt-8 flex items-baseline gap-4">
               <span className="font-serif text-3xl font-medium">{formatPrice(product.price)}</span>
@@ -156,7 +162,44 @@ function ProductDetail() {
             </ul>
           </div>
         )}
+
+        {product.highlights && product.highlights.length > 0 && (
+          <div className="mt-16">
+            {product.headline && (
+              <h2 className="font-serif text-3xl font-semibold">{product.headline}</h2>
+            )}
+            <div className="mt-8 grid gap-6 md:grid-cols-3">
+              {product.highlights.map((h) => (
+                <div key={h.title} className="rounded-[min(1vw,12px)] bg-white p-6 ring-1 ring-black/5">
+                  <h3 className="font-serif text-lg font-semibold text-brand-blue">{h.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-zinc-600">{h.detail}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {product.usage && product.usage.length > 0 && (
+          <div className="mt-12 rounded-[min(1vw,12px)] bg-brand-blue/5 p-8">
+            <h3 className="text-xs font-semibold uppercase tracking-widest text-brand-blue">安心承諾 · 使用建議</h3>
+            <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+              {product.usage.map((u) => (
+                <li key={u} className="flex items-start gap-2 text-sm text-zinc-700">
+                  <Check className="mt-0.5 size-4 shrink-0 text-brand-emerald" />
+                  {u}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {product.disclaimer && (
+          <p className="mt-10 border-t border-zinc-950/5 pt-6 text-xs leading-relaxed text-zinc-500">
+            ※ {product.disclaimer}
+          </p>
+        )}
       </section>
+
 
       {related.length > 0 && (
         <section className="bg-neutral-100 py-20">

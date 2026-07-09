@@ -10,6 +10,11 @@ import nattokinaseQ10 from "@/assets/nattokinase-q10.jpg";
 
 export type Brand = "haojiating" | "bioid";
 
+export interface Highlight {
+  title: string;
+  detail: string;
+}
+
 export interface Product {
   slug: string;
   name: string;
@@ -21,7 +26,13 @@ export interface Product {
   benefits: string[];
   description: string;
   ingredients: string[];
+  certification?: string;
+  headline?: string;
+  highlights?: Highlight[];
+  usage?: string[];
+  disclaimer?: string;
 }
+
 
 export const BRANDS: Record<Brand, { name: string; english: string; description: string }> = {
   haojiating: {

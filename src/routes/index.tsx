@@ -118,8 +118,8 @@ function Index() {
       <section className="border-t border-zinc-950/5 bg-white py-16">
         <div className="mx-auto grid max-w-7xl gap-8 px-6 sm:grid-cols-3">
           {[
-            { title: "國際 SGS 檢驗", desc: "嚴選全球專利原料，重金屬與農藥零檢出" },
-            { title: "醫師團隊監製", desc: "配方經專業營養師與醫師審核，無添加西藥" },
+            { title: "SGS 檢驗", desc: "嚴選全球專利原料，重金屬與農藥零檢出" },
+            { title: "GMP 專業製作", desc: "符合 GMP 藥廠生產標準，全程品質嚴格把關" },
             { title: "台灣在地製造", desc: "GMP 藥廠級生產，全程冷鏈品管把關" },
           ].map((f) => (
             <div key={f.title} className="border-l-2 border-brand-gold pl-4">

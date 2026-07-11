@@ -72,18 +72,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Health & Vitality — 好家庭 × BIOID LIFEFULL 保健嚴選" },
+      { title: "好家庭保健嚴選" },
       {
         name: "description",
         content: "嚴選好家庭與 BIOID LIFEFULL 兩大品牌保健複方，夜間代謝、應酬守護、成長營養、循環美妍一站購足。",
       },
-      { property: "og:title", content: "Health & Vitality — 精品保健電子商店" },
+      { property: "og:title", content: "好家庭保健嚴選" },
       {
         property: "og:description",
-        content: "嚴選好家庭與 BIOID LIFEFULL 兩大品牌保健複方，一站購足全家人的日常健康。",
+        content: "嚴選好家庭與 BIOID LIFEFULL 兩大品牌保健複方，夜間代謝、應酬守護、成長營養、循環美妍一站購足。",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "好家庭保健嚴選" },
+      { name: "twitter:description", content: "嚴選好家庭與 BIOID LIFEFULL 兩大品牌保健複方，夜間代謝、應酬守護、成長營養、循環美妍一站購足。" },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8c150c28-3eee-4179-9048-eb1db3867a06/id-preview-1f0d781e--e8191159-1a45-452a-b548-df962e213a60.lovable.app-1783686042973.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8c150c28-3eee-4179-9048-eb1db3867a06/id-preview-1f0d781e--e8191159-1a45-452a-b548-df962e213a60.lovable.app-1783686042973.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

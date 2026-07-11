@@ -83,7 +83,14 @@ export function ProductCard({ product, variant = "editorial" }: Props) {
         </Link>
         <p className="text-sm text-zinc-500">{product.tagline}</p>
         <div className="mt-4 flex items-center justify-between">
-          <span className="font-serif text-lg font-medium">{formatPrice(product.price)}</span>
+          <div className="flex items-baseline gap-2">
+            <span className="font-serif text-lg font-medium">{formatPrice(product.price)}</span>
+            {product.originalPrice && (
+              <span className="text-sm text-zinc-400 line-through">
+                {formatPrice(product.originalPrice)}
+              </span>
+            )}
+          </div>
           <button
             onClick={() => add(product.slug)}
             className="flex h-9 items-center gap-2 rounded-full border border-zinc-950/10 bg-white py-2 pl-3 pr-4 text-xs font-medium transition-colors hover:bg-zinc-50"

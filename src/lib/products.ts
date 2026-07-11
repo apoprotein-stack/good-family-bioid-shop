@@ -144,7 +144,12 @@ export const PRODUCTS: Product[] = [
     name: "菁萃高純度 DHA 魚油",
     tagline: "源自挪威的純淨承諾 · 國際級靈活守護",
     brand: "bioid",
-    price: 1350,
+    price: 1200,
+    originalPrice: 1350,
+    bulkDiscounts: [
+      { quantity: 3, discount: 0.8, label: "3 件 8 折" },
+      { quantity: 5, discount: 0.75, label: "5 件 75 折" },
+    ],
     image: dhaFishOil,
     size: "60 顆 / 盒",
     benefits: ["IFOS 五星認證", "rTG 型高吸收", "無重金屬", "永續海洋"],

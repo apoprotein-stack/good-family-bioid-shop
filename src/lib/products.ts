@@ -118,7 +118,12 @@ export const PRODUCTS: Product[] = [
     name: "BB 神采速纖飲",
     tagline: "為全家人的活力加分，從每一天的關鍵補給開始",
     brand: "bioid",
-    price: 1680,
+    price: 980,
+    originalPrice: 1680,
+    bulkDiscounts: [
+      { quantity: 3, discount: 0.8, label: "3 件 8 折" },
+      { quantity: 5, discount: 0.75, label: "5 件 75 折" },
+    ],
     image: bbRadiance,
     size: "30 mL × 10 包",
     benefits: ["調整體質", "增強體力", "快速吸收", "全家適用"],

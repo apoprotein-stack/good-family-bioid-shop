@@ -169,7 +169,12 @@ export const PRODUCTS: Product[] = [
     name: "果寡糖順暢粉",
     tagline: "全家人的順暢，媽媽照顧剛剛好",
     brand: "bioid",
-    price: 720,
+    price: 600,
+    originalPrice: 720,
+    bulkDiscounts: [
+      { quantity: 3, discount: 0.8, label: "3 件 8 折" },
+      { quantity: 5, discount: 0.75, label: "5 件 75 折" },
+    ],
     image: fosFiber,
     size: "4.5g × 30 包",
     benefits: ["促進腸道蠕動", "增加腸內益生菌", "無色無味", "0 熱量負擔"],

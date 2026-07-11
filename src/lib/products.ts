@@ -15,12 +15,20 @@ export interface Highlight {
   detail: string;
 }
 
+export interface BulkDiscount {
+  quantity: number;
+  discount: number; // e.g. 0.8 = 8 折
+  label: string;
+}
+
 export interface Product {
   slug: string;
   name: string;
   tagline: string;
   brand: Brand;
   price: number;
+  originalPrice?: number;
+  bulkDiscounts?: BulkDiscount[];
   image: string;
   size: string;
   benefits: string[];

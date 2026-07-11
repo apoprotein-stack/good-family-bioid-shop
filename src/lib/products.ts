@@ -15,12 +15,20 @@ export interface Highlight {
   detail: string;
 }
 
+export interface BulkDiscount {
+  quantity: number;
+  discount: number; // e.g. 0.8 = 8 折
+  label: string;
+}
+
 export interface Product {
   slug: string;
   name: string;
   tagline: string;
   brand: Brand;
   price: number;
+  originalPrice?: number;
+  bulkDiscounts?: BulkDiscount[];
   image: string;
   size: string;
   benefits: string[];
@@ -110,7 +118,12 @@ export const PRODUCTS: Product[] = [
     name: "BB 神采速纖飲",
     tagline: "為全家人的活力加分，從每一天的關鍵補給開始",
     brand: "bioid",
-    price: 1680,
+    price: 980,
+    originalPrice: 1680,
+    bulkDiscounts: [
+      { quantity: 3, discount: 0.8, label: "3 件 8 折" },
+      { quantity: 5, discount: 0.75, label: "5 件 75 折" },
+    ],
     image: bbRadiance,
     size: "30 mL × 10 包",
     benefits: ["調整體質", "增強體力", "快速吸收", "全家適用"],
@@ -131,7 +144,12 @@ export const PRODUCTS: Product[] = [
     name: "菁萃高純度 DHA 魚油",
     tagline: "源自挪威的純淨承諾 · 國際級靈活守護",
     brand: "bioid",
-    price: 1350,
+    price: 1200,
+    originalPrice: 1350,
+    bulkDiscounts: [
+      { quantity: 3, discount: 0.8, label: "3 件 8 折" },
+      { quantity: 5, discount: 0.75, label: "5 件 75 折" },
+    ],
     image: dhaFishOil,
     size: "60 顆 / 盒",
     benefits: ["IFOS 五星認證", "rTG 型高吸收", "無重金屬", "永續海洋"],
@@ -151,7 +169,12 @@ export const PRODUCTS: Product[] = [
     name: "果寡糖順暢粉",
     tagline: "全家人的順暢，媽媽照顧剛剛好",
     brand: "bioid",
-    price: 720,
+    price: 600,
+    originalPrice: 720,
+    bulkDiscounts: [
+      { quantity: 3, discount: 0.8, label: "3 件 8 折" },
+      { quantity: 5, discount: 0.75, label: "5 件 75 折" },
+    ],
     image: fosFiber,
     size: "4.5g × 30 包",
     benefits: ["促進腸道蠕動", "增加腸內益生菌", "無色無味", "0 熱量負擔"],

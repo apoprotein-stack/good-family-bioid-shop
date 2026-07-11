@@ -96,10 +96,31 @@ function ProductDetail() {
             )}
 
 
-            <div className="mt-8 flex items-baseline gap-4">
-              <span className="font-serif text-3xl font-medium">{formatPrice(product.price)}</span>
+            <div className="mt-8 flex items-baseline gap-3">
+              <span className="font-serif text-3xl font-medium text-brand-blue">{formatPrice(product.price)}</span>
+              {product.originalPrice && (
+                <>
+                  <span className="text-lg text-zinc-400 line-through">{formatPrice(product.originalPrice)}</span>
+                  <span className="rounded-full bg-red-50 px-2 py-0.5 text-xs font-medium text-red-600">
+                    特價
+                  </span>
+                </>
+              )}
               <span className="text-sm text-zinc-500">{product.size}</span>
             </div>
+
+            {product.bulkDiscounts && product.bulkDiscounts.length > 0 && (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {product.bulkDiscounts.map((b) => (
+                  <span
+                    key={b.quantity}
+                    className="inline-flex items-center gap-1 rounded-full bg-brand-gold/10 px-3 py-1 text-xs font-medium text-brand-gold"
+                  >
+                    ★ {b.label}
+                  </span>
+                ))}
+              </div>
+            )}
 
             <p className="mt-8 text-pretty text-zinc-600">{product.description}</p>
 

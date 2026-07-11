@@ -61,7 +61,12 @@ export const PRODUCTS: Product[] = [
     name: "夜酵素複方膠囊",
     tagline: "睡得好・代謝好・輕鬆好",
     brand: "haojiating",
-    price: 1280,
+    price: 980,
+    originalPrice: 1280,
+    bulkDiscounts: [
+      { quantity: 3, discount: 0.8, label: "3 件 8 折" },
+      { quantity: 5, discount: 0.75, label: "5 件 75 折" },
+    ],
     image: nightEnzyme,
     size: "60 粒 / 盒",
     benefits: ["放鬆舒眠", "夜間代謝", "幫助消化", "抗氧化保護"],
@@ -74,7 +79,13 @@ export const PRODUCTS: Product[] = [
     tagline: "應酬與繁忙生活的極致營養對策",
     brand: "haojiating",
     price: 980,
+    originalPrice: 1280,
+    bulkDiscounts: [
+      { quantity: 3, discount: 0.8, label: "3 件 8 折" },
+      { quantity: 5, discount: 0.75, label: "5 件 75 折" },
+    ],
     image: vitalityMetabolism,
+
     size: "60 粒 / 盒",
     benefits: ["調整體質", "增強體力", "維持循環健康", "應酬前後保養"],
     description: "專為高壓生活與頻繁商務社交的現代人設計，透過嚴選國際專利植萃與天然發酵原料，協助調整體質、增強體力，並在關鍵時刻維持清晰思緒與生理健康。",
@@ -95,6 +106,11 @@ export const PRODUCTS: Product[] = [
     tagline: "香濃牛奶風味，孩子愛不釋口",
     brand: "haojiating",
     price: 850,
+    originalPrice: 1250,
+    bulkDiscounts: [
+      { quantity: 3, discount: 0.8, label: "3 件 8 折" },
+      { quantity: 5, discount: 0.75, label: "5 件 75 折" },
+    ],
     image: growthCalcium,
     size: "60 錠 / 盒",
     benefits: ["補充關鍵鈣", "維生素 D3 添加", "骨骼與牙齒", "美味好吃"],
@@ -107,7 +123,13 @@ export const PRODUCTS: Product[] = [
     tagline: "私密保養 × 腸道調整 × 美妍維持",
     brand: "haojiating",
     price: 890,
+    originalPrice: 1880,
+    bulkDiscounts: [
+      { quantity: 3, discount: 0.8, label: "3 件 8 折" },
+      { quantity: 5, discount: 0.75, label: "5 件 75 折" },
+    ],
     image: cranberryProbiotics,
+
     size: "60 顆 / 盒",
     benefits: ["女性守護", "腸道平衡", "美妍光彩", "150 億活菌"],
     description: "嚴選蔓越莓萃取搭配 150 億活菌多株專利益生菌，專為女性打造的每日保養配方，由內而外維持腸道平衡與美妍光彩。全素可食，每日 1-2 次即可守護健康美麗。",

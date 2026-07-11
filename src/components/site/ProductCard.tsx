@@ -38,7 +38,14 @@ export function ProductCard({ product, variant = "editorial" }: Props) {
             <p className="mt-1 text-xs text-zinc-500">{product.tagline}</p>
           </div>
           <div className="mt-4 flex items-center justify-between">
-            <span className="text-sm font-medium">{formatPrice(product.price)}</span>
+            <span className="text-sm font-medium">
+              {formatPrice(product.price)}
+              {product.originalPrice && (
+                <span className="ml-1 text-xs text-zinc-400 line-through">
+                  {formatPrice(product.originalPrice)}
+                </span>
+              )}
+            </span>
             <button
               onClick={() => add(product.slug)}
               aria-label={`加入 ${product.name}`}

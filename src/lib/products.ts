@@ -218,7 +218,12 @@ export const PRODUCTS: Product[] = [
     name: "珍珠蜂王乳軟膠囊",
     tagline: "Pearl & Royal Jelly Soft Capsule",
     brand: "bioid",
-    price: 2280,
+    price: 1800,
+    originalPrice: 2280,
+    bulkDiscounts: [
+      { quantity: 3, discount: 0.8, label: "3 件 8 折" },
+      { quantity: 5, discount: 0.75, label: "5 件 75 折" },
+    ],
     image: pearlRoyalJelly,
     size: "60 顆 / 盒",
     benefits: ["蜂王乳", "葡萄皮萃取", "珍珠粉", "由內透亮"],
@@ -230,13 +235,19 @@ export const PRODUCTS: Product[] = [
     name: "晶亮納豆 Q10 軟膠囊",
     tagline: "Nattokinase Plus Q10 Soft Capsules",
     brand: "bioid",
-    price: 2200,
+    price: 1800,
+    originalPrice: 2200,
+    bulkDiscounts: [
+      { quantity: 3, discount: 0.8, label: "3 件 8 折" },
+      { quantity: 5, discount: 0.75, label: "5 件 75 折" },
+    ],
     image: nattokinaseQ10,
     size: "60 顆 / 盒",
     benefits: ["納豆激酶", "輔酵素 Q10", "金盞花萃取", "DHA 添加"],
     description: "四合一晶亮循環配方，納豆激酶與 Q10 支援循環活力，金盞花與 DHA 呵護視覺舒適感。",
     ingredients: ["納豆激酶", "Coenzyme Q10", "金盞花萃取", "DHA"],
   },
+
 ];
 
 export function getProduct(slug: string): Product | undefined {

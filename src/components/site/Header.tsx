@@ -1,14 +1,29 @@
 import { Link } from "@tanstack/react-router";
-import { ShoppingBag, Search } from "lucide-react";
+import { ShoppingBag, Search, Check } from "lucide-react";
 import { useCart } from "@/lib/cart";
+import { useMembership } from "@/lib/membership";
 
 export function Header() {
   const { count, setOpen } = useCart();
+  const { isMember, hydrated, openLineAndUnlock } = useMembership();
+
   return (
     <>
       <div className="bg-brand-blue text-white text-xs sm:text-sm">
-        <div className="mx-auto max-w-7xl px-6 py-2 text-center font-medium tracking-wide">
-          🎉 全館任選 · 3 件 8 折 · 5 件 75 折 · 滿 NT$ 1,500 免運
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-2 px-6 py-2 text-center font-medium tracking-wide sm:flex-row sm:gap-4">
+          <span>🎉 全館任選 · 3 件 8 折 · 5 件 75 折 · 滿 NT$ 1,500 免運</span>
+          {hydrated && isMember ? (
+            <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-3 py-0.5 text-[11px]">
+              <Check className="size-3" /> LINE 會員價已解鎖
+            </span>
+          ) : (
+            <button
+              onClick={openLineAndUnlock}
+              className="inline-flex items-center gap-1 rounded-full bg-[#06C755] px-3 py-0.5 text-[11px] font-semibold text-white ring-1 ring-white/20 transition-transform hover:translate-y-[-1px]"
+            >
+              💬 加 LINE 好友解鎖會員優惠價
+            </button>
+          )}
         </div>
       </div>
       <nav className="sticky top-0 z-40 border-b border-zinc-950/5 bg-background/80 backdrop-blur-md">

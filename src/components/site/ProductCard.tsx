@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { formatPrice, type Product } from "@/lib/products";
 import { useCart } from "@/lib/cart";
+import { useMembership } from "@/lib/membership";
 
 interface Props {
   product: Product;
@@ -10,6 +11,11 @@ interface Props {
 
 export function ProductCard({ product, variant = "editorial" }: Props) {
   const { add } = useCart();
+  const { isMember, hydrated, openLineAndUnlock } = useMembership();
+
+  const showMember = hydrated && isMember;
+  const displayPrice = showMember ? product.price : product.originalPrice ?? product.price;
+  const hasDiscount = product.originalPrice && product.originalPrice > product.price;
 
   if (variant === "compact") {
     return (
@@ -39,10 +45,10 @@ export function ProductCard({ product, variant = "editorial" }: Props) {
           </div>
           <div className="mt-4 flex items-center justify-between">
             <span className="text-sm font-medium">
-              {formatPrice(product.price)}
-              {product.originalPrice && (
+              {formatPrice(displayPrice)}
+              {showMember && hasDiscount && (
                 <span className="ml-1 text-xs text-zinc-400 line-through">
-                  {formatPrice(product.originalPrice)}
+                  {formatPrice(product.originalPrice!)}
                 </span>
               )}
             </span>
@@ -54,6 +60,14 @@ export function ProductCard({ product, variant = "editorial" }: Props) {
               <Plus className="size-4" />
             </button>
           </div>
+          {hydrated && !isMember && hasDiscount && (
+            <button
+              onClick={openLineAndUnlock}
+              className="mt-2 rounded-full bg-[#06C755]/10 px-2 py-1 text-[11px] font-medium text-[#06C755] hover:bg-[#06C755]/20"
+            >
+              💬 加 LINE 會員價 {formatPrice(product.price)}
+            </button>
+          )}
         </div>
       </div>
     );
@@ -84,10 +98,10 @@ export function ProductCard({ product, variant = "editorial" }: Props) {
         <p className="text-sm text-zinc-500">{product.tagline}</p>
         <div className="mt-4 flex items-center justify-between">
           <div className="flex items-baseline gap-2">
-            <span className="font-serif text-lg font-medium">{formatPrice(product.price)}</span>
-            {product.originalPrice && (
+            <span className="font-serif text-lg font-medium">{formatPrice(displayPrice)}</span>
+            {showMember && hasDiscount && (
               <span className="text-sm text-zinc-400 line-through">
-                {formatPrice(product.originalPrice)}
+                {formatPrice(product.originalPrice!)}
               </span>
             )}
           </div>
@@ -99,6 +113,14 @@ export function ProductCard({ product, variant = "editorial" }: Props) {
             加入購物車
           </button>
         </div>
+        {hydrated && !isMember && hasDiscount && (
+          <button
+            onClick={openLineAndUnlock}
+            className="mt-2 inline-flex items-center gap-1 rounded-full bg-[#06C755]/10 px-3 py-1 text-xs font-medium text-[#06C755] hover:bg-[#06C755]/20"
+          >
+            💬 加 LINE 好友解鎖會員價 {formatPrice(product.price)}
+          </button>
+        )}
       </div>
     </div>
   );

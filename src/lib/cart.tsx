@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { PRODUCTS, type Product } from "./products";
+import { memberPrice, useMembership } from "./membership";
 
 export interface CartLine {
   slug: string;
@@ -23,6 +24,7 @@ const CartContext = createContext<CartContextValue | null>(null);
 const STORAGE_KEY = "cart-v1";
 
 export function CartProvider({ children }: { children: ReactNode }) {
+  const { isMember } = useMembership();
   const [lines, setLines] = useState<CartLine[]>([]);
   const [open, setOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
@@ -47,7 +49,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
       .map((l) => {
         const product = PRODUCTS.find((p) => p.slug === l.slug);
         if (!product) return null;
-        return { product, qty: l.qty, lineTotal: product.price * l.qty };
+        const unit = memberPrice(product, isMember);
+        return { product, qty: l.qty, lineTotal: unit * l.qty };
       })
       .filter((x): x is { product: Product; qty: number; lineTotal: number } => x !== null);
 
@@ -75,7 +78,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       subtotal: detailed.reduce((s, x) => s + x.lineTotal, 0),
       detailed,
     };
-  }, [lines, open]);
+  }, [lines, open, isMember]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

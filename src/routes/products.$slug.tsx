@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Minus, Plus, Check } from "lucide-react";
 import { getProduct, PRODUCTS, BRANDS, formatPrice, type Product } from "@/lib/products";
 import { useCart } from "@/lib/cart";
+import { useMembership } from "@/lib/membership";
 import { ProductCard } from "@/components/site/ProductCard";
 
 export const Route = createFileRoute("/products/$slug")({
@@ -48,6 +49,10 @@ function ProductDetail() {
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
   const { add } = useCart();
+  const { isMember, hydrated, openLineAndUnlock } = useMembership();
+  const showMember = hydrated && isMember;
+  const displayPrice = showMember ? product.price : product.originalPrice ?? product.price;
+  const hasDiscount = product.originalPrice && product.originalPrice > product.price;
 
   const related = PRODUCTS.filter((p) => p.brand === product.brand && p.slug !== product.slug).slice(0, 3);
 

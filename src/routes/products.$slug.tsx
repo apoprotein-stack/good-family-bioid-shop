@@ -102,19 +102,36 @@ function ProductDetail() {
 
 
             <div className="mt-8 flex items-baseline gap-3">
-              <span className="font-serif text-3xl font-medium text-brand-blue">{formatPrice(product.price)}</span>
-              {product.originalPrice && (
+              <span className="font-serif text-3xl font-medium text-brand-blue">{formatPrice(displayPrice)}</span>
+              {showMember && hasDiscount && (
                 <>
-                  <span className="text-lg text-zinc-400 line-through">{formatPrice(product.originalPrice)}</span>
+                  <span className="text-lg text-zinc-400 line-through">{formatPrice(product.originalPrice!)}</span>
                   <span className="rounded-full bg-red-50 px-2 py-0.5 text-xs font-medium text-red-600">
-                    特價
+                    會員價
                   </span>
                 </>
               )}
               <span className="text-sm text-zinc-500">{product.size}</span>
             </div>
 
-            {product.bulkDiscounts && product.bulkDiscounts.length > 0 && (
+            {hydrated && !isMember && hasDiscount && (
+              <div className="mt-4 rounded-2xl bg-[#06C755]/5 p-4 ring-1 ring-[#06C755]/20">
+                <p className="text-sm font-medium text-zinc-800">
+                  加入 LINE 好友即可解鎖會員價
+                  <span className="ml-2 text-[#06C755] font-semibold">{formatPrice(product.price)}</span>
+                  <span className="ml-2 text-xs text-zinc-500">（省 {formatPrice(product.originalPrice! - product.price)}）</span>
+                </p>
+                <button
+                  onClick={openLineAndUnlock}
+                  className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#06C755] px-4 py-2 text-sm font-semibold text-white transition-transform hover:translate-y-[-1px]"
+                >
+                  💬 加 LINE 好友 · 立即解鎖會員價
+                </button>
+                <p className="mt-2 text-xs text-zinc-500">加好友並回到本頁即自動套用會員優惠與滿件折扣。</p>
+              </div>
+            )}
+
+            {showMember && product.bulkDiscounts && product.bulkDiscounts.length > 0 && (
               <div className="mt-4 flex flex-wrap gap-2">
                 {product.bulkDiscounts.map((b) => (
                   <span

@@ -39,6 +39,14 @@ export interface Product {
   highlights?: Highlight[];
   usage?: string[];
   disclaimer?: string;
+  /** Official product spec table (規格、產地、保存期限…) */
+  spec?: { label: string; value: string }[];
+  /** Full statutory ingredient statement */
+  fullIngredients?: string;
+  /** Statutory usage / storage / cautions */
+  notes?: string[];
+  /** Statutory warnings (警語) */
+  warnings?: string[];
   /** Marketing badge shown on the card, e.g. "最高回購率" */
   badge?: string;
   /** Auto-renewing DTC subscription SKU */
@@ -404,6 +412,157 @@ export const PRODUCTS: Product[] = [
     ingredients: ["納豆激酶", "Coenzyme Q10", "金盞花萃取", "DHA"],
   },
 ];
+
+/**
+ * Statutory product data mirrored from the bioid official shop (bioidshop.com).
+ * Merged onto the catalogue above so pricing/marketing stays local while the
+ * regulatory copy (許可證字號、成分、警語) matches the manufacturer's listing.
+ */
+const RESPONSIBLE_FIRM: { label: string; value: string }[] = [
+  { label: "產地", value: "台灣" },
+  { label: "貨源", value: "公司貨" },
+  { label: "國內負責廠商", value: "宏曄生物科技有限公司" },
+  { label: "廠商地址", value: "臺北市大同區哈密街 23 巷 1-10 號 1 樓" },
+  { label: "客服電話", value: "02-2595-3515（週一至週五 09:00–18:00）" },
+  { label: "食品業者登錄字號", value: "A-127972230-00000-0" },
+];
+
+const BB_OFFICIAL = {
+  fullIngredients:
+    "水、砂糖、蘋果濃縮汁、綜合莓果汁、牛磺酸、果寡醣、膠原蛋白、支鏈胺基酸、白葡萄濃縮汁、維生素 C、綜合維生素 B 群（維生素 B2、維生素 B6、菸鹼醯胺、維生素 B1、維生素 B12、本多酸鈣、葉酸、生物素）、檸檬酸、香料、咖啡因、β-環狀糊精、甜菊醣苷（甜味劑）、醋磺內酯鉀（甜味劑）。",
+  notes: [
+    "食用方法：每日 1 包",
+    "保存方式：置於室溫（25℃）乾燥陰涼處，避免高溫潮濕或陽光直射",
+    "本產品非藥品，供保健用，罹病者仍需就醫。",
+  ],
+  warnings: ["本品含有少量咖啡因，對咖啡因敏感者，請斟酌使用。"],
+  baseSpec: [
+    { label: "健康食品許可證字號", value: "衛部健食字第 A00439 號「抗疲勞功能」" },
+    { label: "保健功效敘述", value: "經動物實驗結果，有助於延緩運動後疲勞發生" },
+    { label: "保健功效成分", value: "牛磺酸 720.18 ~ 1080.27 毫克 / 包" },
+    { label: "劑型", value: "液體" },
+    { label: "保存期限", value: "24 個月" },
+  ],
+};
+
+const OFFICIAL: Record<
+  string,
+  {
+    spec: { label: string; value: string }[];
+    fullIngredients: string;
+    notes: string[];
+    warnings?: string[];
+  }
+> = {
+  "bb-radiance-subscription-30": {
+    spec: [
+      { label: "容量／規格", value: "30 mL × 30 包 / 箱" },
+      ...BB_OFFICIAL.baseSpec,
+      ...RESPONSIBLE_FIRM,
+    ],
+    fullIngredients: BB_OFFICIAL.fullIngredients,
+    notes: BB_OFFICIAL.notes,
+    warnings: BB_OFFICIAL.warnings,
+  },
+  "bb-radiance-30": {
+    spec: [
+      { label: "容量／規格", value: "30 mL × 30 包 / 盒" },
+      ...BB_OFFICIAL.baseSpec,
+      ...RESPONSIBLE_FIRM,
+    ],
+    fullIngredients: BB_OFFICIAL.fullIngredients,
+    notes: BB_OFFICIAL.notes,
+    warnings: BB_OFFICIAL.warnings,
+  },
+  "bb-radiance-trial-5": {
+    spec: [
+      { label: "容量／規格", value: "30 mL × 5 包 / 袋" },
+      ...BB_OFFICIAL.baseSpec,
+      ...RESPONSIBLE_FIRM,
+    ],
+    fullIngredients: BB_OFFICIAL.fullIngredients,
+    notes: BB_OFFICIAL.notes,
+    warnings: BB_OFFICIAL.warnings,
+  },
+  "bb-radiance-retail-10": {
+    spec: [
+      { label: "容量／規格", value: "30 mL × 10 包 / 盒" },
+      ...BB_OFFICIAL.baseSpec,
+      ...RESPONSIBLE_FIRM,
+    ],
+    fullIngredients: BB_OFFICIAL.fullIngredients,
+    notes: BB_OFFICIAL.notes,
+    warnings: BB_OFFICIAL.warnings,
+  },
+  "fos-fiber": {
+    spec: [
+      { label: "健康食品許可證字號", value: "衛部健食字第 A00338 號「胃腸功能改善」" },
+      { label: "保健功效敘述", value: "經動物實驗結果，有助於增加腸內益生菌" },
+      {
+        label: "保健功效成分",
+        value: "蔗果三糖 61.2 ~ 91.8 毫克 / 包、蔗果四糖 169.2 ~ 253.8 毫克 / 包",
+      },
+      { label: "容量／規格", value: "4.5 公克 × 30 包 / 盒" },
+      { label: "劑型", value: "粉狀" },
+      { label: "保存期限", value: "2 年" },
+      ...RESPONSIBLE_FIRM,
+    ],
+    fullIngredients: "果寡糖、難消化性麥芽糊精、菊苣纖維、D-山梨醇（甜味劑）。",
+    notes: [
+      "食用方法：每日 1 次，每次 1 包，可直接食用或與冷開水、果汁等冷飲一起食用。",
+      "保存方式：置於室溫（27℃ 以下）乾燥陰涼處，避免陽光直射。",
+      "請徵詢醫師、藥師或營養師有關食用本品之意見；均衡的飲食及適當的運動為身體健康之基礎。",
+      "本產品供保健用，請依建議攝取量食用。",
+    ],
+    warnings: [
+      "一歲以下嬰兒不建議使用。",
+      "本產品含果寡糖、難消化性麥芽糊精及菊苣纖維，食用後可能產生排氣與脹氣現象，若有不適者請停止食用。",
+    ],
+  },
+  "nattokinase-q10": {
+    spec: [
+      { label: "容量／規格", value: "60 顆 / 盒" },
+      { label: "劑型", value: "軟膠囊" },
+      { label: "保存期限", value: "2 年" },
+      ...RESPONSIBLE_FIRM,
+    ],
+    fullIngredients:
+      "魚油（含維生素 E（抗氧化劑））、L-精胺酸、納豆菌發酵物、金盞花萃取物、輔酵素 Q10、脂肪酸甘油酯。膠囊殼：明膠、甘油、食用紅色四十號、二氧化鈦、食用藍色一號。",
+    notes: [
+      "食用方法：每日 2 顆",
+      "保存方式：置於乾燥陰涼處（25℃ 以下），避免高溫潮濕或陽光直射",
+      "請徵詢醫師、藥師或營養師有關食用本品之意見；均衡的飲食及適當的運動為身體健康之基礎。",
+      "本產品非藥品，供保健用，罹病者仍需就醫，請依建議攝取量食用、勿過量。",
+    ],
+    warnings: [
+      "嬰幼兒、孕婦、糖尿病患者或正在服用抗凝血劑之凝血功能不全者，食用前請先徵詢醫師意見。",
+      "本產品含有魚類及大豆製品，不適合對其過敏體質者食用。",
+    ],
+  },
+  "pearl-royal-jelly": {
+    spec: [
+      { label: "容量／規格", value: "60 顆 / 盒" },
+      { label: "劑型", value: "軟膠囊" },
+      { label: "保存期限", value: "2 年" },
+      ...RESPONSIBLE_FIRM,
+    ],
+    fullIngredients:
+      "魚油（含維生素 E（抗氧化劑））、蜂王乳、維生素 E（抗氧化劑）、葡萄皮萃取物、珍珠粉、硫酸鋅、沙棘果萃取物、大豆卵磷脂、脂肪酸甘油酯、芝麻萃取物。膠囊殼：明膠、甘油、純水。",
+    notes: [
+      "食用方法：每日 2 顆",
+      "保存方式：置於乾燥陰涼處（25℃ 以下），避免高溫潮濕或陽光直射",
+      "本產品非藥品，供保健用，罹病者仍需就醫。",
+    ],
+    warnings: [
+      "嬰幼兒、孕婦及對蜂產品、魚類、大豆過敏體質者，食用前請先徵詢醫師意見。",
+    ],
+  },
+};
+
+for (const product of PRODUCTS) {
+  const official = OFFICIAL[product.slug];
+  if (official) Object.assign(product, official);
+}
 
 export function getProduct(slug: string): Product | undefined {
   return PRODUCTS.find((p) => p.slug === slug);

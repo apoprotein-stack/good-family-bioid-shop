@@ -291,6 +291,62 @@ function ProductDetail() {
           </div>
         )}
 
+        {product.spec && product.spec.length > 0 && (
+          <div className="mt-12 rounded-[min(1vw,12px)] bg-white p-10 ring-1 ring-black/5">
+            <h3 className="font-serif text-2xl font-semibold">商品規格與標示</h3>
+            <dl className="mt-6 grid gap-x-10 gap-y-3 sm:grid-cols-2">
+              {product.spec.map((row) => (
+                <div
+                  key={row.label}
+                  className="flex flex-col gap-1 border-b border-zinc-950/5 pb-3 sm:flex-row sm:gap-4"
+                >
+                  <dt className="shrink-0 text-xs font-semibold uppercase tracking-widest text-zinc-500 sm:w-40">
+                    {row.label}
+                  </dt>
+                  <dd className="text-sm text-zinc-700">{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+
+            {product.fullIngredients && (
+              <div className="mt-8">
+                <h4 className="text-xs font-semibold uppercase tracking-widest text-brand-blue">
+                  完整成分
+                </h4>
+                <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+                  {product.fullIngredients}
+                </p>
+              </div>
+            )}
+
+            {product.notes && product.notes.length > 0 && (
+              <div className="mt-8">
+                <h4 className="text-xs font-semibold uppercase tracking-widest text-brand-blue">
+                  食用與保存方式
+                </h4>
+                <ul className="mt-2 grid gap-2 text-sm leading-relaxed text-zinc-600">
+                  {product.notes.map((n) => (
+                    <li key={n}>・{n}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {product.warnings && product.warnings.length > 0 && (
+              <div className="mt-8 rounded-[min(1vw,10px)] bg-amber-50 p-6 ring-1 ring-amber-900/10">
+                <h4 className="text-xs font-semibold uppercase tracking-widest text-amber-800">
+                  警語
+                </h4>
+                <ul className="mt-2 grid gap-2 text-sm leading-relaxed text-amber-900">
+                  {product.warnings.map((w) => (
+                    <li key={w}>・{w}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+
         {product.disclaimer && (
           <p className="mt-10 border-t border-zinc-950/5 pt-6 text-xs leading-relaxed text-zinc-500">
             ※ {product.disclaimer}

@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
+import { Plus, MapPin } from "lucide-react";
 import { formatPrice, type Product } from "@/lib/products";
 import { useCart } from "@/lib/cart";
 import { useMembership } from "@/lib/membership";
@@ -14,8 +14,13 @@ export function ProductCard({ product, variant = "editorial" }: Props) {
   const { isMember, hydrated, openLineAndUnlock } = useMembership();
 
   const showMember = hydrated && isMember;
-  const displayPrice = showMember ? product.price : product.originalPrice ?? product.price;
+  const displayPrice = showMember ? product.price : (product.originalPrice ?? product.price);
   const hasDiscount = product.originalPrice && product.originalPrice > product.price;
+  const badge = product.badge && (
+    <span className="inline-flex items-center rounded-full bg-brand-gold/10 px-2 py-0.5 text-[11px] font-medium text-brand-gold">
+      {product.badge}
+    </span>
+  );
 
   if (variant === "compact") {
     return (
@@ -34,6 +39,7 @@ export function ProductCard({ product, variant = "editorial" }: Props) {
         </Link>
         <div className="flex flex-1 flex-col justify-between">
           <div>
+            {badge && <div className="mb-1">{badge}</div>}
             <Link
               to="/products/$slug"
               params={{ slug: product.slug }}
@@ -52,15 +58,26 @@ export function ProductCard({ product, variant = "editorial" }: Props) {
                 </span>
               )}
             </span>
-            <button
-              onClick={() => add(product.slug)}
-              aria-label={`加入 ${product.name}`}
-              className="flex size-8 items-center justify-center rounded-full bg-brand-emerald text-white transition-transform hover:scale-105"
-            >
-              <Plus className="size-4" />
-            </button>
+            {product.retailPartnerOnly ? (
+              <Link
+                to="/"
+                hash="partner-stores"
+                aria-label="查詢實體門市"
+                className="flex size-8 items-center justify-center rounded-full bg-brand-teal text-white transition-transform hover:scale-105"
+              >
+                <MapPin className="size-4" />
+              </Link>
+            ) : (
+              <button
+                onClick={() => add(product.slug)}
+                aria-label={`加入 ${product.name}`}
+                className="flex size-8 items-center justify-center rounded-full bg-brand-emerald text-white transition-transform hover:scale-105"
+              >
+                <Plus className="size-4" />
+              </button>
+            )}
           </div>
-          {hydrated && !isMember && hasDiscount && (
+          {!product.retailPartnerOnly && hydrated && !isMember && hasDiscount && (
             <button
               onClick={openLineAndUnlock}
               className="mt-2 rounded-full bg-[#06C755]/10 px-2 py-1 text-[11px] font-medium text-[#06C755] hover:bg-[#06C755]/20"
@@ -88,6 +105,7 @@ export function ProductCard({ product, variant = "editorial" }: Props) {
         />
       </Link>
       <div className="space-y-1">
+        {badge && <div>{badge}</div>}
         <Link
           to="/products/$slug"
           params={{ slug: product.slug }}
@@ -104,16 +122,28 @@ export function ProductCard({ product, variant = "editorial" }: Props) {
                 {formatPrice(product.originalPrice!)}
               </span>
             )}
+            {product.unitNote && <span className="text-xs text-zinc-400">{product.unitNote}</span>}
           </div>
-          <button
-            onClick={() => add(product.slug)}
-            className="flex h-9 items-center gap-2 rounded-full border border-zinc-950/10 bg-white py-2 pl-3 pr-4 text-xs font-medium transition-colors hover:bg-zinc-50"
-          >
-            <Plus className="size-3.5" />
-            加入購物車
-          </button>
+          {product.retailPartnerOnly ? (
+            <Link
+              to="/"
+              hash="partner-stores"
+              className="flex h-9 items-center gap-2 rounded-full border border-brand-teal/30 bg-white py-2 pl-3 pr-4 text-xs font-medium text-brand-teal transition-colors hover:bg-brand-teal/5"
+            >
+              <MapPin className="size-3.5" />
+              查詢門市
+            </Link>
+          ) : (
+            <button
+              onClick={() => add(product.slug)}
+              className="flex h-9 items-center gap-2 rounded-full border border-zinc-950/10 bg-white py-2 pl-3 pr-4 text-xs font-medium transition-colors hover:bg-zinc-50"
+            >
+              <Plus className="size-3.5" />
+              加入購物車
+            </button>
+          )}
         </div>
-        {hydrated && !isMember && hasDiscount && (
+        {!product.retailPartnerOnly && hydrated && !isMember && hasDiscount && (
           <button
             onClick={openLineAndUnlock}
             className="mt-2 inline-flex items-center gap-1 rounded-full bg-[#06C755]/10 px-3 py-1 text-xs font-medium text-[#06C755] hover:bg-[#06C755]/20"

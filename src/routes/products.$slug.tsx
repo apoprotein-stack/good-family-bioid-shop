@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { Minus, Plus, Check } from "lucide-react";
+import { Minus, Plus, Check, MapPin } from "lucide-react";
 import { getProduct, PRODUCTS, BRANDS, formatPrice, type Product } from "@/lib/products";
 import { useCart } from "@/lib/cart";
 import { useMembership } from "@/lib/membership";
@@ -20,7 +20,10 @@ export const Route = createFileRoute("/products/$slug")({
     return {
       meta: [
         { title: `${product.name} — Health & Vitality` },
-        { name: "description", content: `${product.tagline}。${product.description.slice(0, 100)}` },
+        {
+          name: "description",
+          content: `${product.tagline}。${product.description.slice(0, 100)}`,
+        },
         { property: "og:title", content: `${product.name} — Health & Vitality` },
         { property: "og:description", content: product.tagline },
         { property: "og:image", content: product.image },
@@ -51,10 +54,12 @@ function ProductDetail() {
   const { add } = useCart();
   const { isMember, hydrated, openLineAndUnlock } = useMembership();
   const showMember = hydrated && isMember;
-  const displayPrice = showMember ? product.price : product.originalPrice ?? product.price;
+  const displayPrice = showMember ? product.price : (product.originalPrice ?? product.price);
   const hasDiscount = product.originalPrice && product.originalPrice > product.price;
 
-  const related = PRODUCTS.filter((p) => p.brand === product.brand && p.slug !== product.slug).slice(0, 3);
+  const related = PRODUCTS.filter(
+    (p) => p.brand === product.brand && p.slug !== product.slug,
+  ).slice(0, 3);
 
   const handleAdd = () => {
     add(product.slug, qty);
@@ -74,7 +79,11 @@ function ProductDetail() {
             全部產品
           </Link>
           <span>/</span>
-          <Link to="/brands/$brand" params={{ brand: product.brand }} className="hover:text-brand-blue">
+          <Link
+            to="/brands/$brand"
+            params={{ brand: product.brand }}
+            className="hover:text-brand-blue"
+          >
             {BRANDS[product.brand].name}
           </Link>
         </nav>
@@ -92,7 +101,14 @@ function ProductDetail() {
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-gold">
               {BRANDS[product.brand].name} · {BRANDS[product.brand].english}
             </span>
-            <h1 className="mt-3 font-serif text-4xl font-semibold leading-tight sm:text-5xl">{product.name}</h1>
+            {product.badge && (
+              <span className="mt-3 inline-flex w-fit items-center rounded-full bg-brand-gold/10 px-3 py-1 text-xs font-medium text-brand-gold">
+                {product.badge}
+              </span>
+            )}
+            <h1 className="mt-3 font-serif text-4xl font-semibold leading-tight sm:text-5xl">
+              {product.name}
+            </h1>
             <p className="mt-3 text-lg text-zinc-500">{product.tagline}</p>
             {product.certification && (
               <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-brand-emerald/10 px-3 py-1 text-xs font-medium text-brand-emerald">
@@ -100,26 +116,52 @@ function ProductDetail() {
               </p>
             )}
 
-
             <div className="mt-8 flex items-baseline gap-3">
-              <span className="font-serif text-3xl font-medium text-brand-blue">{formatPrice(displayPrice)}</span>
+              <span className="font-serif text-3xl font-medium text-brand-blue">
+                {formatPrice(displayPrice)}
+              </span>
               {showMember && hasDiscount && (
                 <>
-                  <span className="text-lg text-zinc-400 line-through">{formatPrice(product.originalPrice!)}</span>
+                  <span className="text-lg text-zinc-400 line-through">
+                    {formatPrice(product.originalPrice!)}
+                  </span>
                   <span className="rounded-full bg-red-50 px-2 py-0.5 text-xs font-medium text-red-600">
                     會員價
                   </span>
                 </>
               )}
               <span className="text-sm text-zinc-500">{product.size}</span>
+              {product.unitNote && (
+                <span className="text-xs text-zinc-400">{product.unitNote}</span>
+              )}
             </div>
 
-            {hydrated && !isMember && hasDiscount && (
+            {product.retailPartnerOnly && (
+              <div className="mt-4 rounded-2xl bg-brand-teal/5 p-4 ring-1 ring-brand-teal/20">
+                <p className="text-sm font-medium text-zinc-800">
+                  本 SKU 僅於授權實體通路販售，恕不提供線上直購。
+                </p>
+                <Link
+                  to="/"
+                  hash="partner-stores"
+                  className="mt-3 inline-flex items-center gap-2 rounded-full bg-brand-teal px-4 py-2 text-sm font-semibold text-white transition-transform hover:translate-y-[-1px]"
+                >
+                  <MapPin className="size-4" />
+                  查詢全台特約門市
+                </Link>
+              </div>
+            )}
+
+            {!product.retailPartnerOnly && hydrated && !isMember && hasDiscount && (
               <div className="mt-4 rounded-2xl bg-[#06C755]/5 p-4 ring-1 ring-[#06C755]/20">
                 <p className="text-sm font-medium text-zinc-800">
                   加入 LINE 好友即可解鎖會員價
-                  <span className="ml-2 text-[#06C755] font-semibold">{formatPrice(product.price)}</span>
-                  <span className="ml-2 text-xs text-zinc-500">（省 {formatPrice(product.originalPrice! - product.price)}）</span>
+                  <span className="ml-2 text-[#06C755] font-semibold">
+                    {formatPrice(product.price)}
+                  </span>
+                  <span className="ml-2 text-xs text-zinc-500">
+                    （省 {formatPrice(product.originalPrice! - product.price)}）
+                  </span>
                 </p>
                 <button
                   onClick={openLineAndUnlock}
@@ -127,7 +169,9 @@ function ProductDetail() {
                 >
                   💬 加 LINE 好友 · 立即解鎖會員價
                 </button>
-                <p className="mt-2 text-xs text-zinc-500">加好友並回到本頁即自動套用會員優惠與滿件折扣。</p>
+                <p className="mt-2 text-xs text-zinc-500">
+                  加好友並回到本頁即自動套用會員優惠與滿件折扣。
+                </p>
               </div>
             )}
 
@@ -147,7 +191,9 @@ function ProductDetail() {
             <p className="mt-8 text-pretty text-zinc-600">{product.description}</p>
 
             <div className="mt-10 border-t border-zinc-950/5 pt-8">
-              <h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-500">主要功效</h3>
+              <h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
+                主要功效
+              </h3>
               <ul className="mt-4 grid grid-cols-2 gap-3">
                 {product.benefits.map((b) => (
                   <li key={b} className="flex items-center gap-2 text-sm">
@@ -160,36 +206,40 @@ function ProductDetail() {
               </ul>
             </div>
 
-            <div className="mt-10 flex flex-wrap items-center gap-4">
-              <div className="flex items-center gap-1 rounded-full ring-1 ring-zinc-950/10">
-                <button
-                  onClick={() => setQty((q) => Math.max(1, q - 1))}
-                  className="flex size-10 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-100"
-                  aria-label="減少數量"
-                >
-                  <Minus className="size-4" />
-                </button>
-                <span className="w-10 text-center text-sm font-medium">{qty}</span>
-                <button
-                  onClick={() => setQty((q) => q + 1)}
-                  className="flex size-10 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-100"
-                  aria-label="增加數量"
-                >
-                  <Plus className="size-4" />
-                </button>
-              </div>
-              <button
-                onClick={handleAdd}
-                className="flex-1 rounded-full bg-brand-blue px-8 py-3 text-sm font-medium text-white ring-1 ring-brand-blue transition-transform hover:translate-y-[-1px] sm:flex-none"
-              >
-                {added ? "已加入購物車 ✓" : "加入購物車"}
-              </button>
-            </div>
+            {!product.retailPartnerOnly && (
+              <>
+                <div className="mt-10 flex flex-wrap items-center gap-4">
+                  <div className="flex items-center gap-1 rounded-full ring-1 ring-zinc-950/10">
+                    <button
+                      onClick={() => setQty((q) => Math.max(1, q - 1))}
+                      className="flex size-10 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-100"
+                      aria-label="減少數量"
+                    >
+                      <Minus className="size-4" />
+                    </button>
+                    <span className="w-10 text-center text-sm font-medium">{qty}</span>
+                    <button
+                      onClick={() => setQty((q) => q + 1)}
+                      className="flex size-10 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-100"
+                      aria-label="增加數量"
+                    >
+                      <Plus className="size-4" />
+                    </button>
+                  </div>
+                  <button
+                    onClick={handleAdd}
+                    className="flex-1 rounded-full bg-brand-blue px-8 py-3 text-sm font-medium text-white ring-1 ring-brand-blue transition-transform hover:translate-y-[-1px] sm:flex-none"
+                  >
+                    {added ? "已加入購物車 ✓" : "加入購物車"}
+                  </button>
+                </div>
 
-            <div className="mt-10 border-t border-zinc-950/5 pt-6 text-xs text-zinc-500">
-              <p>✓ 滿 NT$ 1,500 免運費 · 台灣本島 24 小時出貨</p>
-              <p className="mt-1">✓ 未開封 7 天鑑賞期，滿意保證</p>
-            </div>
+                <div className="mt-10 border-t border-zinc-950/5 pt-6 text-xs text-zinc-500">
+                  <p>✓ 滿 NT$ 1,500 免運費 · 台灣本島 24 小時出貨</p>
+                  <p className="mt-1">✓ 未開封 7 天鑑賞期，滿意保證</p>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -213,7 +263,10 @@ function ProductDetail() {
             )}
             <div className="mt-8 grid gap-6 md:grid-cols-3">
               {product.highlights.map((h) => (
-                <div key={h.title} className="rounded-[min(1vw,12px)] bg-white p-6 ring-1 ring-black/5">
+                <div
+                  key={h.title}
+                  className="rounded-[min(1vw,12px)] bg-white p-6 ring-1 ring-black/5"
+                >
                   <h3 className="font-serif text-lg font-semibold text-brand-blue">{h.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-zinc-600">{h.detail}</p>
                 </div>
@@ -224,7 +277,9 @@ function ProductDetail() {
 
         {product.usage && product.usage.length > 0 && (
           <div className="mt-12 rounded-[min(1vw,12px)] bg-brand-blue/5 p-8">
-            <h3 className="text-xs font-semibold uppercase tracking-widest text-brand-blue">安心承諾 · 使用建議</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-widest text-brand-blue">
+              安心承諾 · 使用建議
+            </h3>
             <ul className="mt-4 grid gap-2 sm:grid-cols-2">
               {product.usage.map((u) => (
                 <li key={u} className="flex items-start gap-2 text-sm text-zinc-700">
@@ -242,7 +297,6 @@ function ProductDetail() {
           </p>
         )}
       </section>
-
 
       {related.length > 0 && (
         <section className="bg-neutral-100 py-20">

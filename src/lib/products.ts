@@ -39,6 +39,14 @@ export interface Product {
   highlights?: Highlight[];
   usage?: string[];
   disclaimer?: string;
+  /** Official product spec table (規格、產地、保存期限…) */
+  spec?: { label: string; value: string }[];
+  /** Full statutory ingredient statement */
+  fullIngredients?: string;
+  /** Statutory usage / storage / cautions */
+  notes?: string[];
+  /** Statutory warnings (警語) */
+  warnings?: string[];
   /** Marketing badge shown on the card, e.g. "最高回購率" */
   badge?: string;
   /** Auto-renewing DTC subscription SKU */

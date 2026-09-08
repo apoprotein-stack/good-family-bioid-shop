@@ -416,6 +416,12 @@ export const PRODUCTS: Product[] = [
   },
 ];
 
+/** Brands currently shown on the site. */
+export const VISIBLE_BRANDS: Brand[] = ["bioid"];
+
+/** Products currently shown on the site (excludes hidden brands). */
+export const VISIBLE_PRODUCTS = PRODUCTS.filter((p) => VISIBLE_BRANDS.includes(p.brand));
+
 /**
  * Statutory product data mirrored from the bioid official shop (bioidshop.com).
  * Merged onto the catalogue above so pricing/marketing stays local while the

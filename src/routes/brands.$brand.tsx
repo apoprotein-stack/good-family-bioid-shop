@@ -3,7 +3,7 @@ import { BRANDS, productsByBrand, type Brand } from "@/lib/products";
 import { ProductCard } from "@/components/site/ProductCard";
 
 function isBrand(x: string): x is Brand {
-  return x === "haojiating" || x === "bioid";
+  return x === "bioid";
 }
 
 export const Route = createFileRoute("/brands/$brand")({

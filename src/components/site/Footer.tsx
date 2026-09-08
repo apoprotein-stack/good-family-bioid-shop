@@ -16,11 +16,6 @@ export function Footer() {
               <h5 className="text-xs font-semibold uppercase tracking-widest text-zinc-900">產品分類</h5>
               <ul className="space-y-2 text-sm text-zinc-500">
                 <li>
-                  <Link to="/brands/$brand" params={{ brand: "haojiating" }} className="hover:text-brand-blue">
-                    好家庭日常系列
-                  </Link>
-                </li>
-                <li>
                   <Link to="/brands/$brand" params={{ brand: "bioid" }} className="hover:text-brand-blue">
                     BIOID 科技系列
                   </Link>
@@ -45,7 +40,7 @@ export function Footer() {
         </div>
         <div className="mt-16 flex flex-wrap items-center justify-between gap-6 border-t border-zinc-950/5 pt-8">
           <p className="text-xs text-zinc-400">© 2026 Health &amp; Vitality. All rights reserved.</p>
-          <p className="text-xs text-zinc-400">好家庭系列 × BIOID LIFEFULL</p>
+          <p className="text-xs text-zinc-400">BIOID LIFEFULL 官方特約經銷</p>
         </div>
       </div>
     </footer>

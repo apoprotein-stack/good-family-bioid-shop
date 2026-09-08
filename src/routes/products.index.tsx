@@ -1,15 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { VISIBLE_PRODUCTS, VISIBLE_BRANDS, BRANDS, type Brand } from "@/lib/products";
+import { VISIBLE_PRODUCTS, BRANDS, type Brand } from "@/lib/products";
 import { ProductCard } from "@/components/site/ProductCard";
 
 export const Route = createFileRoute("/products/")({
   head: () => ({
     meta: [
       { title: "全部產品 — Health & Vitality" },
-      { name: "description", content: "瀏覽好家庭與 BIOID LIFEFULL 全系列保健產品，一站購足家庭日常與精準保養。" },
+      { name: "description", content: "瀏覽 BIOID LIFEFULL 全系列保健產品，一站購足科技精準補給。" },
       { property: "og:title", content: "全部產品 — Health & Vitality" },
-      { property: "og:description", content: "好家庭 × BIOID LIFEFULL 全系列保健複方。" },
+      { property: "og:description", content: "BIOID LIFEFULL 全系列保健複方。" },
     ],
   }),
   component: ProductsPage,

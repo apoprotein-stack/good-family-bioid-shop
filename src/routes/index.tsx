@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import heroImg from "@/assets/hero.jpg";
-import { PRODUCTS, productsByBrand, BRANDS } from "@/lib/products";
+import { VISIBLE_PRODUCTS, productsByBrand, BRANDS } from "@/lib/products";
 import { ProductCard } from "@/components/site/ProductCard";
 import { PartnerStoresSection } from "@/components/site/PartnerStoresSection";
 
@@ -9,7 +9,6 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const haojiating = productsByBrand("haojiating");
   const bioid = productsByBrand("bioid");
 
   return (
@@ -55,34 +54,6 @@ function Index() {
                 className="aspect-[4/3] w-full rounded-[min(1vw,12px)] object-cover outline outline-1 -outline-offset-1 outline-black/5"
               />
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 好家庭 */}
-      <section className="bg-white py-24">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-16 flex items-end justify-between border-b border-zinc-950/5 pb-8">
-            <div className="max-w-[56ch]">
-              <h2 className="font-serif text-3xl font-semibold leading-tight">
-                {BRANDS.haojiating.name}系列
-              </h2>
-              <p className="mt-2 text-zinc-500">
-                Good Family — 溫暖守護，照顧每個家庭成員的日常所需
-              </p>
-            </div>
-            <Link
-              to="/brands/$brand"
-              params={{ brand: "haojiating" }}
-              className="text-sm font-medium text-brand-blue underline decoration-brand-blue/30 underline-offset-4"
-            >
-              查看全部產品
-            </Link>
-          </div>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {haojiating.map((p) => (
-              <ProductCard key={p.slug} product={p} />
-            ))}
           </div>
         </div>
       </section>
@@ -142,7 +113,7 @@ function Index() {
               <p className="mt-1 text-sm text-zinc-500">{f.desc}</p>
             </div>
           ))}
-          <p className="sr-only">共 {PRODUCTS.length} 項產品</p>
+          <p className="sr-only">共 {VISIBLE_PRODUCTS.length} 項產品</p>
         </div>
       </section>
     </>

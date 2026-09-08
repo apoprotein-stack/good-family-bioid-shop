@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
-import { PRODUCTS } from "@/lib/products";
+import { VISIBLE_PRODUCTS } from "@/lib/products";
 
 const BASE_URL = "";
 
@@ -11,9 +11,8 @@ export const Route = createFileRoute("/sitemap.xml")({
         const entries = [
           { path: "/", changefreq: "weekly", priority: "1.0" },
           { path: "/products", changefreq: "weekly", priority: "0.9" },
-          { path: "/brands/haojiating", changefreq: "monthly", priority: "0.8" },
           { path: "/brands/bioid", changefreq: "monthly", priority: "0.8" },
-          ...PRODUCTS.map((p) => ({
+          ...VISIBLE_PRODUCTS.map((p) => ({
             path: `/products/${p.slug}`,
             changefreq: "monthly" as const,
             priority: "0.7",

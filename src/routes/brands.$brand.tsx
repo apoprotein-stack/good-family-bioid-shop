@@ -35,18 +35,15 @@ export const Route = createFileRoute("/brands/$brand")({
 });
 
 function BrandPage() {
-  const { brand, meta, products } = Route.useLoaderData() as {
+  const { meta, products } = Route.useLoaderData() as {
     brand: Brand;
     meta: (typeof BRANDS)[Brand];
     products: import("@/lib/products").Product[];
   };
-  const isHao = brand === "haojiating";
 
   return (
     <>
-      <section
-        className={`border-b border-zinc-950/5 py-24 ${isHao ? "bg-white" : "bg-neutral-100"}`}
-      >
+      <section className="border-b border-zinc-950/5 bg-neutral-100 py-24">
         <div className="mx-auto max-w-7xl px-6">
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-gold">{meta.english}</span>
           <h1 className="mt-3 font-serif text-5xl font-semibold leading-tight sm:text-6xl">{meta.name}</h1>
